@@ -42,9 +42,11 @@ const StyledReviewList = styled.div`
   gap: 85px;
 `;
 
-const Reviews = () => {
+const Reviews = (props) => {
+  const { id } = props;
+
   return (
-    <StyledReviews>
+    <StyledReviews id={id}>
       <Container>
         <StyledTitle>Отзывы</StyledTitle>
 

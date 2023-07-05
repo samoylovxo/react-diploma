@@ -12,16 +12,23 @@ const StyledHome = styled.div`
 `;
 
 const Home = () => {
+  const handleMenuItemClick = (id) => {
+    const element = document.getElementById(id);
+
+    if (element)
+      element.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
+
   return (
-    <Default>
+    <Default onMenuItemClick={handleMenuItemClick}>
       <StyledHome>
         <Hero />
 
-        <About />
+        <About id="about" />
 
-        <HowWork />
+        <HowWork id="how-work" />
 
-        <Reviews />
+        <Reviews id="reviews" />
       </StyledHome>
     </Default>
   );

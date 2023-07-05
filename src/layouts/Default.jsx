@@ -4,7 +4,6 @@ import { Logo } from "components/Logo";
 import { Input } from "components/Input";
 import { useForm } from "react-hook-form";
 import { Button } from "components/Button";
-import { NavLink } from "react-router-dom";
 import { REQUIRED } from "utils/consts";
 import {
   PhoneFilled,
@@ -48,19 +47,19 @@ const SOCIALS = [
 
 const MENU = [
   {
-    path: "about",
+    id: "about",
     name: "О нас",
   },
   {
-    path: "how-work",
+    id: "how-work",
     name: "Как это работает",
   },
   {
-    path: "reviews",
+    id: "reviews",
     name: "Отзывы",
   },
   {
-    path: "contacts",
+    id: "contacts",
     name: "Контакты",
   },
 ];
@@ -186,7 +185,7 @@ const StyledCopyright = styled.p`
 `;
 
 const Default = (props) => {
-  const { children } = props;
+  const { children, onMenuItemClick } = props;
 
   const form = useForm({
     mode: "onSubmit",
@@ -204,12 +203,15 @@ const Default = (props) => {
         <StyledHeaderMenu>
           <Container>
             {MENU.map((item, index) => {
-              const { path, name } = item;
+              const { id, name } = item;
 
               return (
-                <NavLink to={`/#${path}`} key={index}>
-                  <StyledHeaderMenuItem>{name}</StyledHeaderMenuItem>
-                </NavLink>
+                <StyledHeaderMenuItem
+                  key={index}
+                  onClick={() => onMenuItemClick && onMenuItemClick(id)}
+                >
+                  {name}
+                </StyledHeaderMenuItem>
               );
             })}
           </Container>
@@ -218,7 +220,7 @@ const Default = (props) => {
 
       {children}
 
-      <StyledFooter>
+      <StyledFooter id="contacts">
         <Container>
           <StyledFooterTop>
             <StyledFooterLeft>

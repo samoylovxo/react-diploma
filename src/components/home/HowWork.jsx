@@ -82,9 +82,11 @@ const StyledBlockText = styled.p`
   font-weight: 400;
 `;
 
-const HowWork = () => {
+const HowWork = (props) => {
+  const { id } = props;
+
   return (
-    <StyledHowWork>
+    <StyledHowWork id={id}>
       <Container>
         <StyledTop>
           <StyledTitle>Как это работает</StyledTitle>

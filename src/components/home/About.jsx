@@ -61,9 +61,11 @@ const StyledDescription = styled.p`
   font-weight: ${({ isBold }) => (isBold ? 700 : 400)};
 `;
 
-const About = () => {
+const About = (props) => {
+  const { id } = props;
+
   return (
-    <StyledAbout>
+    <StyledAbout id={id}>
       <Container>
         <StyledTitle>О нас</StyledTitle>
 
