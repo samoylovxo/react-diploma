@@ -17,6 +17,12 @@ const StyledSelect = styled(AntdSelect)`
     padding: 12px 20px !important;
     font-size: 18px !important;
   }
+
+  .select-selection-search-input {
+    font-size: 18px;
+    padding: 12px 8px !important;
+    height: 100% !important;
+  }
 `;
 
 const StyledSelectLabel = styled.div`
@@ -42,6 +48,7 @@ const Select = (props) => {
     placeholder,
     register,
     errors,
+    onSearch,
     onChange,
   } = props;
 
@@ -57,6 +64,8 @@ const Select = (props) => {
           <EnvironmentFilled style={{ fontSize: "32px", color: "#E5E5E5" }} />
         }
         {...register}
+        showSearch={true}
+        onSearch={onSearch}
         onChange={(option) => {
           if (onChange) onChange(option);
         }}
