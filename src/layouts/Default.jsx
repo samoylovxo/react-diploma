@@ -1,59 +1,109 @@
 import React from "react";
-import { Input, Button } from "antd";
 import { Container } from "components/Container";
 import { Logo } from "components/Logo";
-import { REQUIRED } from "utils/consts";
+import { Input } from "components/Input";
 import { useForm } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message";
+import { Button } from "components/Button";
+import { NavLink } from "react-router-dom";
+import { REQUIRED } from "utils/consts";
+import {
+  PhoneFilled,
+  MailOutlined,
+  SkypeFilled,
+  EnvironmentFilled,
+  YoutubeFilled,
+  LinkedinFilled,
+  GoogleOutlined,
+  FacebookFilled,
+  TwitterOutlined,
+} from "@ant-design/icons";
 import styled from "styled-components";
 
 const CONTACTS = [
   {
-    icon: "",
+    icon: <PhoneFilled style={{ fontSize: "32px", color: "##E5E5E5" }} />,
     text: "8 (800) 000 00 00",
   },
   {
-    icon: "",
+    icon: <MailOutlined style={{ fontSize: "32px", color: "##E5E5E5" }} />,
     text: "inbox@mail.ru",
   },
   {
-    icon: "",
+    icon: <SkypeFilled style={{ fontSize: "32px", color: "##E5E5E5" }} />,
     text: "tu.train.tickets",
   },
   {
-    icon: "",
+    icon: <EnvironmentFilled style={{ fontSize: "32px", color: "##E5E5E5" }} />,
     text: "г. Москва ул. Московская 27-35 555 555",
   },
 ];
+
 const SOCIALS = [
+  { icon: <YoutubeFilled style={{ fontSize: "32px", color: "##E5E5E5" }} /> },
+  { icon: <LinkedinFilled style={{ fontSize: "32px", color: "##E5E5E5" }} /> },
+  { icon: <GoogleOutlined style={{ fontSize: "32px", color: "##E5E5E5" }} /> },
+  { icon: <FacebookFilled style={{ fontSize: "32px", color: "##E5E5E5" }} /> },
+  { icon: <TwitterOutlined style={{ fontSize: "32px", color: "##E5E5E5" }} /> },
+];
+
+const MENU = [
   {
-    icon: "",
+    path: "about",
+    name: "О нас",
   },
   {
-    icon: "",
+    path: "how-work",
+    name: "Как это работает",
   },
   {
-    icon: "",
+    path: "reviews",
+    name: "Отзывы",
   },
   {
-    icon: "",
-  },
-  {
-    icon: "",
+    path: "contacts",
+    name: "Контакты",
   },
 ];
 
 const StyledDefault = styled.div`
+  position: relative;
+
   color: #ffffff;
 `;
 
-const StyledContent = styled.div`
-  min-height: 100vh;
-  display: grid;
-  grid-template-rows: 1fr auto;
+const StyledHeader = styled.header`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+
+  background-color: rgba(0, 0, 0, 0.6);
 `;
 
-const StyledFooter = styled.div`
+const StyledLogoWrapper = styled.div`
+  padding: 16px 0;
+`;
+
+const StyledHeaderMenu = styled.ul`
+  padding: 24px;
+
+  background-color: #292929;
+
+  ${Container} {
+    display: grid;
+    grid-auto-flow: column;
+    column-gap: 84px;
+    justify-content: start;
+  }
+`;
+
+const StyledHeaderMenuItem = styled.li`
+  font-size: 30px;
+  font-weight: 300;
+`;
+
+const StyledFooter = styled.footer`
   background-color: #2d2b2f;
 `;
 
@@ -75,7 +125,12 @@ const StyledFooterBottom = styled.div`
   border-top: 1px solid #e5e5e5;
 `;
 
-const StyledMenu = styled.div`
+const StyledFooterLeft = styled.div`
+  display: grid;
+  row-gap: 32px;
+`;
+
+const StyledFooterRight = styled.div`
   display: grid;
   row-gap: 32px;
 `;
@@ -86,32 +141,35 @@ const StyledSub = styled.div`
   align-content: start;
 `;
 
+const StyledSocials = styled.div`
+  display: grid;
+  row-gap: 32px;
+  align-content: start;
+`;
+
+const StyledSocialList = styled.div`
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: start;
+  gap: 32px;
+`;
+
 const StyledTitle = styled.h2`
   font-size: 30px;
   font-weight: 500;
   color: #ffffff;
 `;
 
-const StyledContact = styled.h2`
+const StyledContact = styled.p`
+  display: grid;
+  grid-auto-flow: column;
+  gap: 20px;
+  align-content: center;
+  justify-content: start;
+
   color: #e5e5e5;
   font-size: 24px;
   font-weight: 400;
-`;
-
-const StyledInputWrapper = styled.div`
-  position: relative;
-
-  display: grid;
-  row-gap: 12px;
-`;
-
-const StyledInput = styled(Input)`
-  height: 60px;
-`;
-
-const StyledInputLabel = styled.div`
-  color: #e5e5e5;
-  font-size: 24px;
 `;
 
 const StyledForm = styled.form`
@@ -127,19 +185,6 @@ const StyledCopyright = styled.p`
   color: #e5e5e5;
 `;
 
-const StyledError = styled.p`
-  position: absolute;
-  bottom: -24px;
-  left: 0;
-
-  font-size: 12px;
-  color: #cc4343;
-`;
-
-const StyledButton = styled(Button)`
-  height: 60px;
-`;
-
 const Default = (props) => {
   const { children } = props;
 
@@ -149,33 +194,62 @@ const Default = (props) => {
 
   return (
     <StyledDefault>
-      <StyledContent>{children}</StyledContent>
+      <StyledHeader>
+        <Container>
+          <StyledLogoWrapper>
+            <Logo />
+          </StyledLogoWrapper>
+        </Container>
+
+        <StyledHeaderMenu>
+          <Container>
+            {MENU.map((item, index) => {
+              const { path, name } = item;
+
+              return (
+                <NavLink to={`/#${path}`} key={index}>
+                  <StyledHeaderMenuItem>{name}</StyledHeaderMenuItem>
+                </NavLink>
+              );
+            })}
+          </Container>
+        </StyledHeaderMenu>
+      </StyledHeader>
+
+      {children}
 
       <StyledFooter>
         <Container>
           <StyledFooterTop>
-            <StyledMenu>
+            <StyledFooterLeft>
               <StyledTitle>Свяжитесь с нами</StyledTitle>
-              {CONTACTS.map((social) => {
+              {CONTACTS.map((social, index) => {
                 const { icon, text } = social;
 
-                return <StyledContact>{text}</StyledContact>;
+                return (
+                  <StyledContact key={index}>
+                    {icon} <span>{text}</span>
+                  </StyledContact>
+                );
               })}
-            </StyledMenu>
-            <StyledSub>
-              <StyledTitle>Подписка</StyledTitle>
+            </StyledFooterLeft>
 
-              <StyledForm
-                onSubmit={form.handleSubmit((data) => {
-                  console.log("data", data);
-                })}
-              >
-                <StyledInputWrapper>
-                  <StyledInputLabel>Будьте в курсе событий</StyledInputLabel>
-                  <StyledInput
+            <StyledFooterRight>
+              <StyledSub>
+                <StyledTitle>Подписка</StyledTitle>
+
+                <StyledForm
+                  onSubmit={form.handleSubmit((data) => {
+                    console.log("data", data);
+                  })}
+                >
+                  <Input
+                    name="email"
+                    label="Будьте в курсе событий"
                     placeholder="e-mail"
-                    {...form.register("email", REQUIRED)}
-                    onChange={({ target: { value } }) => {
+                    register={form.register("email", REQUIRED)}
+                    errors={form.formState.errors}
+                    onChange={(value) => {
                       if (value.trim() !== "") form.clearErrors("email");
 
                       form.setValue("email", value, {
@@ -185,18 +259,20 @@ const Default = (props) => {
                     }}
                   />
 
-                  <ErrorMessage
-                    errors={form.formState.errors}
-                    name="email"
-                    render={({ message }) => (
-                      <StyledError>{message}</StyledError>
-                    )}
-                  />
-                </StyledInputWrapper>
+                  <Button type="submit" view="secondary">
+                    Отправить
+                  </Button>
+                </StyledForm>
+              </StyledSub>
 
-                <StyledButton htmlType="submit">Отправить</StyledButton>
-              </StyledForm>
-            </StyledSub>
+              <StyledSocials>
+                <StyledTitle>Подписывайтесь на нас</StyledTitle>
+
+                <StyledSocialList>
+                  {SOCIALS.map((social) => social.icon)}
+                </StyledSocialList>
+              </StyledSocials>
+            </StyledFooterRight>
           </StyledFooterTop>
           <StyledFooterBottom>
             <Logo />
