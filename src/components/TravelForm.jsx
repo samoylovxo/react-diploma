@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { Select } from "components/Select";
 import { useForm } from "react-hook-form";
-import { REQUIRED } from "utils/consts";
+import { REQUIRED } from "utils/constants";
 import { Button } from "components/Button";
 import { Datepicker } from "components/Datepicker";
-import { useGetCities } from "hooks/query/useGetCities";
 import { SyncOutlined } from "@ant-design/icons";
 import styled, { css } from "styled-components";
+import { ContextTravel } from "hooks/useTravel";
 
-const StyledTrainForm = styled.form`
+const StyledTravelForm = styled.form`
   background-color: rgba(41, 41, 41, 0.8);
 
   ${({ isDirectionColumn }) =>
@@ -20,7 +20,7 @@ const StyledTrainForm = styled.form`
           gap: 40px;
         `
       : css`
-          padding: 20px 32px;
+          padding: 40px 48px;
 
           display: grid;
           gap: 40px;
@@ -46,24 +46,24 @@ const SET_VALUE_OPTIONS = {
 };
 
 // direction: 'column' | 'row'
-const TrainForm = (props) => {
+const TravelForm = (props) => {
   const { direction = "column", onSubmit } = props;
+
+  const {
+    state: { citiesOptions },
+    mutations: { setSearchCity },
+  } = useContext(ContextTravel);
 
   const form = useForm({
     mode: "onSubmit",
   });
 
-  const [searchCity, setSearchCity] = useState("");
-
-  const { data: cities } = useGetCities(searchCity);
-
-  // console.log("searchCity", searchCity);
-  // console.log("cities", cities);
+  console.log("citiesOptions", citiesOptions);
 
   const isDirectionColumn = direction === "column";
 
   return (
-    <StyledTrainForm
+    <StyledTravelForm
       isDirectionColumn={isDirectionColumn}
       onSubmit={form.handleSubmit(onSubmit)}
     >
@@ -74,6 +74,7 @@ const TrainForm = (props) => {
           placeholder="Откуда"
           register={form.register("from", REQUIRED)}
           errors={form.formState.errors}
+          options={citiesOptions}
           onSearch={setSearchCity}
           onChange={(value) => {
             if (value.trim() !== "") form.clearErrors("from");
@@ -89,6 +90,8 @@ const TrainForm = (props) => {
           placeholder="Куда"
           register={form.register("to", REQUIRED)}
           errors={form.formState.errors}
+          options={citiesOptions}
+          onSearch={setSearchCity}
           onChange={(value) => {
             if (value.trim() !== "") form.clearErrors("to");
 
@@ -125,8 +128,8 @@ const TrainForm = (props) => {
       <Button type="submit" isBlock={isDirectionColumn}>
         Найти билеты
       </Button>
-    </StyledTrainForm>
+    </StyledTravelForm>
   );
 };
 
-export { TrainForm };
+export { TravelForm };

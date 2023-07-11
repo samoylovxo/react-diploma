@@ -1,7 +1,8 @@
 import React from "react";
 import { Container } from "components/Container";
-import { TrainForm } from "components/TrainForm";
+import { TravelForm } from "components/TravelForm";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const StyledHero = styled.section`
   height: 800px;
@@ -42,6 +43,8 @@ const StyledTitle = styled.h1`
 `;
 
 const Hero = () => {
+  const navigate = useNavigate();
+
   return (
     <StyledHero>
       <StyledContainer>
@@ -50,7 +53,13 @@ const Hero = () => {
             Вся жизнь - <span>путешествие!</span>
           </StyledTitle>
 
-          <TrainForm onSubmit={(data) => console.log("data", data)} />
+          <TravelForm onSubmit={(data) => console.log("data", data)} />
+          <div
+            style={{ color: "white" }}
+            onClick={() => navigate("/select-train")}
+          >
+            ДАЛЕЕ
+          </div>
         </StyledContent>
       </StyledContainer>
     </StyledHero>

@@ -16,12 +16,20 @@ const StyledSelect = styled(AntdSelect)`
     height: 60px !important;
     padding: 12px 20px !important;
     font-size: 18px !important;
+
+    &:hover {
+      border-color: transparent !important;
+    }
   }
 
   .select-selection-search-input {
     font-size: 18px;
     padding: 12px 8px !important;
     height: 100% !important;
+  }
+
+  .select-selection-item {
+    width: 80px;
   }
 `;
 
@@ -65,6 +73,7 @@ const Select = (props) => {
         }
         {...register}
         showSearch={true}
+        filterOption={false}
         onSearch={onSearch}
         onChange={(option) => {
           if (onChange) onChange(option);

@@ -4,7 +4,7 @@ import { Logo } from "components/Logo";
 import { Input } from "components/Input";
 import { useForm } from "react-hook-form";
 import { Button } from "components/Button";
-import { REQUIRED } from "utils/consts";
+import { REQUIRED } from "utils/constants";
 import {
   PhoneFilled,
   MailOutlined,
@@ -17,6 +17,7 @@ import {
   TwitterOutlined,
 } from "@ant-design/icons";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const CONTACTS = [
   {
@@ -100,6 +101,8 @@ const StyledHeaderMenu = styled.ul`
 const StyledHeaderMenuItem = styled.li`
   font-size: 30px;
   font-weight: 300;
+
+  cursor: pointer;
 `;
 
 const StyledFooter = styled.footer`
@@ -185,7 +188,9 @@ const StyledCopyright = styled.p`
 `;
 
 const Default = (props) => {
-  const { children, onMenuItemClick } = props;
+  const { children, showMenu = false, onMenuItemClick } = props;
+
+  const navigate = useNavigate();
 
   const form = useForm({
     mode: "onSubmit",
@@ -196,26 +201,28 @@ const Default = (props) => {
       <StyledHeader>
         <Container>
           <StyledLogoWrapper>
-            <Logo />
+            <Logo onClick={() => navigate("/")} />
           </StyledLogoWrapper>
         </Container>
 
-        <StyledHeaderMenu>
-          <Container>
-            {MENU.map((item, index) => {
-              const { id, name } = item;
+        {showMenu && (
+          <StyledHeaderMenu>
+            <Container>
+              {MENU.map((item, index) => {
+                const { id, name } = item;
 
-              return (
-                <StyledHeaderMenuItem
-                  key={index}
-                  onClick={() => onMenuItemClick && onMenuItemClick(id)}
-                >
-                  {name}
-                </StyledHeaderMenuItem>
-              );
-            })}
-          </Container>
-        </StyledHeaderMenu>
+                return (
+                  <StyledHeaderMenuItem
+                    key={index}
+                    onClick={() => onMenuItemClick && onMenuItemClick(id)}
+                  >
+                    {name}
+                  </StyledHeaderMenuItem>
+                );
+              })}
+            </Container>
+          </StyledHeaderMenu>
+        )}
       </StyledHeader>
 
       {children}

@@ -20,7 +20,7 @@ const Home = () => {
   };
 
   return (
-    <Default onMenuItemClick={handleMenuItemClick}>
+    <Default showMenu={true} onMenuItemClick={handleMenuItemClick}>
       <StyledHome>
         <Hero />
 

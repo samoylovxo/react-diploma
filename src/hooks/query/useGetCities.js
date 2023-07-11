@@ -1,23 +1,17 @@
 import { useQuery } from "react-query";
 import axios from "axios";
-
-const BASE_URL = "https://netology-trainbooking.netoservices.ru";
+import { API_BASE_URL } from "utils/constants";
 
 export const useGetCities = (searchCity) => {
-  const { data, isLoading } = useQuery(
+  return useQuery(
     ["cities", searchCity],
     async () =>
       axios.get("/routes/cities", {
-        baseURL: BASE_URL,
+        baseURL: API_BASE_URL,
         params: {
           name: searchCity,
         },
       }),
     { enabled: Boolean(searchCity) }
   );
-
-  return {
-    data,
-    isLoading,
-  };
 };

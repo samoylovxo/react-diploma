@@ -18,6 +18,10 @@ const StyledInput = styled(AntdInput)`
   &::placeholder {
     color: #e5e5e5;
   }
+
+  &:hover {
+    border-color: transparent !important;
+  }
 `;
 
 const StyledInputLabel = styled.div`
