@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import styled from "styled-components";
 import { Default } from "layouts/Default";
 import { TravelForm } from "components/TravelForm";
 import { Container } from "components/Container";
-import { Tabs } from "components/Tabs";
-import styled from "styled-components";
+import { Steps } from "components/Steps";
+import { ContextTravel } from "hooks/useTravel";
+import { StepOne } from "components/steps/StepOne";
+import { Filters } from "components/Filters";
 
 const StyledTabContent = styled.span`
   display: grid;
@@ -24,50 +27,10 @@ const StyledTabKey = styled.span`
   border-radius: 50%;
 `;
 
-const TABS = [
-  {
-    label: (
-      <StyledTabContent>
-        <StyledTabKey>1</StyledTabKey>
-        Билеты
-      </StyledTabContent>
-    ),
-    key: "1",
-    disabled: true,
-  },
-  {
-    label: (
-      <StyledTabContent>
-        <StyledTabKey>2</StyledTabKey>
-        Пассажиры
-      </StyledTabContent>
-    ),
-    key: "2",
-    disabled: true,
-  },
-  {
-    label: (
-      <StyledTabContent>
-        <StyledTabKey>3</StyledTabKey>
-        Оплата
-      </StyledTabContent>
-    ),
-    key: "3",
-    disabled: true,
-  },
-  {
-    label: (
-      <StyledTabContent>
-        <StyledTabKey>4</StyledTabKey>
-        Проверка
-      </StyledTabContent>
-    ),
-    key: "4",
-    disabled: true,
-  },
-];
-
-const StyledSelectTrain = styled.div``;
+const StyledSelectTrain = styled.div`
+  height: 400px;
+  color: #000;
+`;
 
 const StyledSelectTrainHero = styled.div`
   height: 400px;
@@ -79,14 +42,43 @@ const StyledSelectTrainHero = styled.div`
   background-color: #000000;
 `;
 
-const StyledContainer = styled(Container)`
+const StyledHeroContainer = styled(Container)`
   height: 100%;
 
   display: flex;
   align-items: flex-end;
 `;
 
+const StyledContainer = styled(Container)`
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 80px;
+`;
+
+const StyledFilters = styled.div``;
+
 const SelectTrain = () => {
+  const {
+    state: { formValues },
+    actions: { handleBaseFormSubmit },
+  } = useContext(ContextTravel);
+
+  // console.log("formValues", formValues);
+
+  const [activeStepIndex, setActiveStepIndex] = useState(0);
+
+  const handleNextStep = () => {
+    setActiveStepIndex((index) =>
+      index < steps.length - 1 ? index + 1 : index
+    );
+  };
+
+  const handlePrevStep = () => {
+    setActiveStepIndex((index) =>
+      index < steps.length - 1 ? index - 1 : index
+    );
+  };
+
   const steps = [
     {
       label: (
@@ -95,9 +87,15 @@ const SelectTrain = () => {
           Билеты
         </StyledTabContent>
       ),
-      key: "1",
-      content: "uyk5465",
-      disabled: true,
+      content: (
+        <StepOne
+          onNextStep={(route) => {
+            handleNextStep();
+            console.log("route", route);
+          }}
+        />
+      ),
+      isActive: activeStepIndex >= 0,
     },
     {
       label: (
@@ -106,9 +104,8 @@ const SelectTrain = () => {
           Пассажиры
         </StyledTabContent>
       ),
-      key: "2",
-      content: "ASDASD",
-      disabled: true,
+      content: <StyledSelectTrain>Пассажиры</StyledSelectTrain>,
+      isActive: activeStepIndex >= 1,
     },
     {
       label: (
@@ -117,9 +114,8 @@ const SelectTrain = () => {
           Оплата
         </StyledTabContent>
       ),
-      key: "3",
-      content: "asdasd",
-      disabled: true,
+      content: <StyledSelectTrain>Оплата</StyledSelectTrain>,
+      isActive: activeStepIndex >= 2,
     },
     {
       label: (
@@ -128,28 +124,32 @@ const SelectTrain = () => {
           Проверка
         </StyledTabContent>
       ),
-      key: "4",
-      content: "456546",
-      disabled: true,
+      content: <StyledSelectTrain>Проверка</StyledSelectTrain>,
+      isActive: activeStepIndex >= 3,
     },
   ];
 
-  const [activeStep, setActiveStep] = useState(steps[0]);
+  const activeStep = steps[activeStepIndex];
 
   return (
     <Default>
       <StyledSelectTrainHero>
-        <StyledContainer>
-          <TravelForm
-            direction="row"
-            onSubmit={(data) => console.log("data", data)}
-          />
-        </StyledContainer>
-
-        <Tabs tabs={steps} activeTabKey={activeStep.key} />
+        <StyledHeroContainer>
+          <TravelForm direction="row" onSubmit={handleBaseFormSubmit} />
+        </StyledHeroContainer>
       </StyledSelectTrainHero>
 
-      <StyledSelectTrain>asdsd</StyledSelectTrain>
+      <Steps steps={steps} activeStepKey={activeStep.key} />
+
+      <button onClick={handleNextStep}>next</button>
+      <button onClick={handlePrevStep}>prev</button>
+
+      <StyledContainer>
+        <StyledFilters>
+          <Filters />
+        </StyledFilters>
+        {activeStep.content}
+      </StyledContainer>
     </Default>
   );
 };

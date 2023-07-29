@@ -2,8 +2,16 @@ import styled, { css } from "styled-components";
 
 const Button = styled.button`
   width: ${({ isBlock }) => (isBlock ? "100%" : "max-content")};
-  height: 60px;
-  padding: 16px;
+  ${({ size = "m" }) =>
+    size === "m"
+      ? css`
+          height: 60px;
+          padding: 0 16px;
+        `
+      : css`
+          height: 40px;
+          padding: 0 8px;
+        `}
 
   border: 1px solid transparent;
   border-radius: 5px;

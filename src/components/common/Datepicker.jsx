@@ -4,6 +4,7 @@ import locale from "antd/locale/ru_RU";
 import { ErrorMessage } from "@hookform/error-message";
 import { CalendarOutlined } from "@ant-design/icons";
 import styled from "styled-components";
+import dayjs from "dayjs";
 
 const StyledDatepickerWrapper = styled.div`
   position: relative;
@@ -25,7 +26,7 @@ const StyledDatepicker = styled(AntdDatepicker)`
   }
 `;
 
-const StyledDatepickerLabel = styled.div`
+const StyledLabel = styled.div`
   color: #e5e5e5;
   font-size: 24px;
 `;
@@ -44,13 +45,12 @@ const Datepicker = (props) => {
 
   return (
     <StyledDatepickerWrapper>
-      {label && <StyledDatepickerLabel>{label}</StyledDatepickerLabel>}
+      {label && <StyledLabel>{label}</StyledLabel>}
       <StyledDatepicker
         {...register}
         prefixCls="datepicker"
         format="DD.MM.YYYY"
         placeholder={placeholder}
-        value={value}
         locale={locale}
         allowClear={false}
         showToday={false}
@@ -60,6 +60,7 @@ const Datepicker = (props) => {
         onChange={(option) => {
           if (onChange) onChange(new Date(option));
         }}
+        {...(value ? { value: dayjs(value) } : {})}
       />
 
       <ErrorMessage

@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Container } from "components/Container";
 import { Logo } from "components/Logo";
-import { Input } from "components/Input";
+import { Input } from "components/common/Input";
 import { useForm } from "react-hook-form";
-import { Button } from "components/Button";
+import { Button } from "components/common/Button";
 import { REQUIRED } from "utils/constants";
 import {
   PhoneFilled,
@@ -18,6 +18,7 @@ import {
 } from "@ant-design/icons";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { ContextTravel } from "hooks/useTravel";
 
 const CONTACTS = [
   {
@@ -68,7 +69,7 @@ const MENU = [
 const StyledDefault = styled.div`
   position: relative;
 
-  color: #ffffff;
+  color: #000000;
 `;
 
 const StyledHeader = styled.header`
@@ -101,6 +102,7 @@ const StyledHeaderMenu = styled.ul`
 const StyledHeaderMenuItem = styled.li`
   font-size: 30px;
   font-weight: 300;
+  color: #ffffff;
 
   cursor: pointer;
 `;
@@ -190,6 +192,10 @@ const StyledCopyright = styled.p`
 const Default = (props) => {
   const { children, showMenu = false, onMenuItemClick } = props;
 
+  const {
+    actions: { handleFormReset },
+  } = useContext(ContextTravel);
+
   const navigate = useNavigate();
 
   const form = useForm({
@@ -201,7 +207,12 @@ const Default = (props) => {
       <StyledHeader>
         <Container>
           <StyledLogoWrapper>
-            <Logo onClick={() => navigate("/")} />
+            <Logo
+              onClick={() => {
+                navigate("/");
+                handleFormReset();
+              }}
+            />
           </StyledLogoWrapper>
         </Container>
 

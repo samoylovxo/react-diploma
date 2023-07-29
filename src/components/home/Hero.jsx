@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Container } from "components/Container";
 import { TravelForm } from "components/TravelForm";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { ContextTravel } from "hooks/useTravel";
 
 const StyledHero = styled.section`
   height: 800px;
@@ -45,6 +46,10 @@ const StyledTitle = styled.h1`
 const Hero = () => {
   const navigate = useNavigate();
 
+  const {
+    actions: { handleBaseFormSubmit },
+  } = useContext(ContextTravel);
+
   return (
     <StyledHero>
       <StyledContainer>
@@ -53,13 +58,12 @@ const Hero = () => {
             Вся жизнь - <span>путешествие!</span>
           </StyledTitle>
 
-          <TravelForm onSubmit={(data) => console.log("data", data)} />
-          <div
-            style={{ color: "white" }}
-            onClick={() => navigate("/select-train")}
-          >
-            ДАЛЕЕ
-          </div>
+          <TravelForm
+            onSubmit={(data) => {
+              handleBaseFormSubmit(data);
+              navigate("/select-train");
+            }}
+          />
         </StyledContent>
       </StyledContainer>
     </StyledHero>

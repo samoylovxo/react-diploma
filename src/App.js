@@ -10,14 +10,14 @@ const queryClient = new QueryClient();
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <AppProvider>
-        <BrowserRouter>
+      <BrowserRouter>
+        <AppProvider>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/select-train" element={<SelectTrain />} />
           </Routes>
-        </BrowserRouter>
-      </AppProvider>
+        </AppProvider>
+      </BrowserRouter>
     </QueryClientProvider>
   );
 };

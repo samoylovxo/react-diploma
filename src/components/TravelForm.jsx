@@ -1,9 +1,8 @@
 import React, { useContext } from "react";
-import { Select } from "components/Select";
-import { useForm } from "react-hook-form";
-import { REQUIRED } from "utils/constants";
-import { Button } from "components/Button";
-import { Datepicker } from "components/Datepicker";
+import { Select } from "components/common/Select";
+import { REQUIRED, SET_VALUE_OPTIONS } from "utils/constants";
+import { Button } from "components/common/Button";
+import { Datepicker } from "components/common/Datepicker";
 import { SyncOutlined } from "@ant-design/icons";
 import styled, { css } from "styled-components";
 import { ContextTravel } from "hooks/useTravel";
@@ -40,88 +39,83 @@ const StyledSyncOutlined = styled(SyncOutlined)`
   margin-bottom: 20px;
 `;
 
-const SET_VALUE_OPTIONS = {
-  shouldDirty: true,
-  shouldValidate: true,
-};
-
 // direction: 'column' | 'row'
 const TravelForm = (props) => {
   const { direction = "column", onSubmit } = props;
 
   const {
-    state: { citiesOptions },
+    state: { formInstance, citiesOptions },
     mutations: { setSearchCity },
+    actions: { handleFormSetValue },
   } = useContext(ContextTravel);
 
-  const form = useForm({
-    mode: "onSubmit",
-  });
-
-  console.log("citiesOptions", citiesOptions);
-
   const isDirectionColumn = direction === "column";
+
+  console.log(formInstance.watch("startDate"));
 
   return (
     <StyledTravelForm
       isDirectionColumn={isDirectionColumn}
-      onSubmit={form.handleSubmit(onSubmit)}
+      onSubmit={formInstance.handleSubmit(onSubmit)}
     >
       <StyledFormRow>
         <Select
-          name="from"
+          name="fromCityId"
           label="Направление"
           placeholder="Откуда"
-          register={form.register("from", REQUIRED)}
-          errors={form.formState.errors}
+          value={formInstance.watch("fromCityId")}
+          register={formInstance.register("fromCityId", REQUIRED)}
+          errors={formInstance.formState.errors}
           options={citiesOptions}
           onSearch={setSearchCity}
           onChange={(value) => {
-            if (value.trim() !== "") form.clearErrors("from");
+            if (value.trim() !== "") formInstance.clearErrors("fromCityId");
 
-            form.setValue("from", value, SET_VALUE_OPTIONS);
+            handleFormSetValue("fromCityId", value);
           }}
         />
 
         <StyledSyncOutlined style={{ fontSize: "20px", color: "#E5E5E5" }} />
 
         <Select
-          name="to"
+          name="toCityId"
           placeholder="Куда"
-          register={form.register("to", REQUIRED)}
-          errors={form.formState.errors}
+          value={formInstance.watch("toCityId")}
+          register={formInstance.register("toCityId", REQUIRED)}
+          errors={formInstance.formState.errors}
           options={citiesOptions}
           onSearch={setSearchCity}
           onChange={(value) => {
-            if (value.trim() !== "") form.clearErrors("to");
+            if (value.trim() !== "") formInstance.clearErrors("toCityId");
 
-            form.setValue("to", value, SET_VALUE_OPTIONS);
+            handleFormSetValue("toCityId", value);
           }}
         />
       </StyledFormRow>
 
       <StyledFormRow>
         <Datepicker
-          name="startDate"
+          name="dateStart"
           label="Дата"
           placeholder="ДД/ММ/ГГ"
-          register={form.register("from", REQUIRED)}
-          errors={form.formState.errors}
+          value={formInstance.watch("dateStart")}
+          register={formInstance.register("dateStart")}
+          errors={formInstance.formState.errors}
           onChange={(value) => {
-            console.log("value", value);
-            form.setValue("startDate", value, SET_VALUE_OPTIONS);
+            handleFormSetValue("dateStart", value);
           }}
         />
 
         <StyledSyncOutlined style={{ fontSize: "20px", color: "#E5E5E5" }} />
 
         <Datepicker
-          name="endDate"
+          name="dateEnd"
           placeholder="ДД/ММ/ГГ"
-          register={form.register("to", REQUIRED)}
-          errors={form.formState.errors}
+          value={formInstance.watch("dateEnd")}
+          register={formInstance.register("dateEnd")}
+          errors={formInstance.formState.errors}
           onChange={(value) => {
-            form.setValue("endDate", value, SET_VALUE_OPTIONS);
+            handleFormSetValue("dateEnd", value);
           }}
         />
       </StyledFormRow>

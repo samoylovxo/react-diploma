@@ -33,7 +33,7 @@ const StyledSelect = styled(AntdSelect)`
   }
 `;
 
-const StyledSelectLabel = styled.div`
+const StyledLabel = styled.div`
   color: #e5e5e5;
   font-size: 24px;
 `;
@@ -62,8 +62,9 @@ const Select = (props) => {
 
   return (
     <StyledSelectWrapper>
-      {label && <StyledSelectLabel>{label}</StyledSelectLabel>}
+      {label && <StyledLabel>{label}</StyledLabel>}
       <StyledSelect
+        {...register}
         prefixCls="select"
         options={options}
         placeholder={placeholder}
@@ -71,7 +72,6 @@ const Select = (props) => {
         suffixIcon={
           <EnvironmentFilled style={{ fontSize: "32px", color: "#E5E5E5" }} />
         }
-        {...register}
         showSearch={true}
         filterOption={false}
         onSearch={onSearch}

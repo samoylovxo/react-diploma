@@ -4,4 +4,9 @@ const REQUIRED = {
   required: "Поле обязательно для заполнения",
 };
 
-export { API_BASE_URL, REQUIRED };
+const SET_VALUE_OPTIONS = {
+  shouldDirty: true,
+  shouldValidate: true,
+};
+
+export { API_BASE_URL, REQUIRED, SET_VALUE_OPTIONS };

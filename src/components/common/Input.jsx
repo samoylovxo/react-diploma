@@ -24,7 +24,7 @@ const StyledInput = styled(AntdInput)`
   }
 `;
 
-const StyledInputLabel = styled.div`
+const StyledLabel = styled.div`
   color: #e5e5e5;
   font-size: 24px;
 `;
@@ -43,7 +43,7 @@ const Input = (props) => {
 
   return (
     <StyledInputWrapper>
-      {label && <StyledInputLabel>{label}</StyledInputLabel>}
+      {label && <StyledLabel>{label}</StyledLabel>}
       <StyledInput
         placeholder={placeholder}
         value={value}
