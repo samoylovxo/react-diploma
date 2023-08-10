@@ -10,13 +10,19 @@ const StyledLabel = styled.div`
 `;
 
 const Range = (props) => {
-  const { label, value, onChange } = props;
+  const { label, value, min = 10, max = 99999, onChange } = props;
 
   return (
     <StyledRange>
       {label && <StyledLabel>{label}</StyledLabel>}
 
-      <Slider defaultValue={value} range={true} min={10} max={99999} onChange={onChange} />
+      <Slider
+        defaultValue={value}
+        min={min}
+        max={max}
+        range={true}
+        onChange={onChange}
+      />
     </StyledRange>
   );
 };

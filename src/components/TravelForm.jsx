@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Select } from "components/common/Select";
-import { REQUIRED, SET_VALUE_OPTIONS } from "utils/constants";
+import { REQUIRED } from "utils/constants";
 import { Button } from "components/common/Button";
 import { Datepicker } from "components/common/Datepicker";
 import { SyncOutlined } from "@ant-design/icons";
@@ -65,7 +65,7 @@ const TravelForm = (props) => {
           placeholder="Откуда"
           value={formInstance.watch("fromCityId")}
           register={formInstance.register("fromCityId", REQUIRED)}
-          errors={formInstance.formState.errors}
+          errors={formInstance?.formState?.errors}
           options={citiesOptions}
           onSearch={setSearchCity}
           onChange={(value) => {
@@ -82,7 +82,7 @@ const TravelForm = (props) => {
           placeholder="Куда"
           value={formInstance.watch("toCityId")}
           register={formInstance.register("toCityId", REQUIRED)}
-          errors={formInstance.formState.errors}
+          errors={formInstance?.formState?.errors}
           options={citiesOptions}
           onSearch={setSearchCity}
           onChange={(value) => {
@@ -100,7 +100,7 @@ const TravelForm = (props) => {
           placeholder="ДД/ММ/ГГ"
           value={formInstance.watch("dateStart")}
           register={formInstance.register("dateStart")}
-          errors={formInstance.formState.errors}
+          errors={formInstance?.formState?.errors}
           onChange={(value) => {
             handleFormSetValue("dateStart", value);
           }}
@@ -113,7 +113,7 @@ const TravelForm = (props) => {
           placeholder="ДД/ММ/ГГ"
           value={formInstance.watch("dateEnd")}
           register={formInstance.register("dateEnd")}
-          errors={formInstance.formState.errors}
+          errors={formInstance?.formState?.errors}
           onChange={(value) => {
             handleFormSetValue("dateEnd", value);
           }}

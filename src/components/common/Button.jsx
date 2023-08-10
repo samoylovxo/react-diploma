@@ -22,15 +22,11 @@ const Button = styled.button`
 
   transition: background-color 0.4s, border-color 0.4s, color 0.4s,
     box-shadow 0.4s;
-  cursor: pointer;
 
-  ${({ view }) =>
+  ${({ view, color }) =>
     view === "secondary"
       ? css`
-          border-color: #ffffff;
           background-color: transparent;
-
-          color: #ffffff;
 
           &:hover {
             border-color: #ffca62;
@@ -45,6 +41,18 @@ const Button = styled.button`
 
             color: #2d2b2f;
           }
+
+          ${color === "white"
+            ? css`
+                border-color: #ffffff;
+
+                color: #ffffff;
+              `
+            : css`
+                border-color: #292929;
+
+                color: #292929;
+              `}
         `
       : css`
           border-color: ##ffa800;
@@ -69,6 +77,7 @@ const Button = styled.button`
 
 Button.defaultProps = {
   view: "primary", // 'primary' | 'secondary'
+  color: "white", // 'white' | 'black'
   isBlock: false,
   weight: 400,
 };

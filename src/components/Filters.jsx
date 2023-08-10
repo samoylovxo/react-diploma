@@ -30,7 +30,7 @@ const Filters = () => {
           label="Дата поездки"
           placeholder="ДД/ММ/ГГ"
           value={formInstance.watch("dateStart")}
-          errors={formInstance.formState.errors}
+          errors={formInstance?.formState?.errors}
           onChange={(value) => {
             handleFormSetValue("dateStart", value);
           }}
@@ -41,7 +41,7 @@ const Filters = () => {
           label="Дата возвращения"
           placeholder="ДД/ММ/ГГ"
           value={formInstance.watch("dateEnd")}
-          errors={formInstance.formState.errors}
+          errors={formInstance?.formState?.errors}
           onChange={(value) => {
             handleFormSetValue("dateEnd", value);
           }}
@@ -103,9 +103,11 @@ const Filters = () => {
 
         <Range
           label="Стоимость"
+          min={1920}
+          max={7000}
           value={[
-            formInstance.watch("priceFrom"),
-            formInstance.watch("priceTo"),
+            formInstance.watch("priceFrom") || 1920,
+            formInstance.watch("priceTo") || 7000,
           ]}
           onChange={(value) => {
             handleFormSetValue("priceFrom", value[0]);

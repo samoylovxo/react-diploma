@@ -248,17 +248,22 @@ export const useGetRouteSeats = (params) => {
     haveAirConditioning,
   } = params;
 
-  return useQuery(["route-seats", params], async () =>
-    axios.get(`/routes/${id}/seats`, {
-      baseURL: API_BASE_URL,
-      params: {
-        have_first_class: haveFirstClass,
-        have_second_class: haveSecondClass,
-        have_third_class: haveThirdClass,
-        have_fourth_class: haveFourthClass,
-        have_wifi: haveWifi,
-        have_air_conditioning: haveAirConditioning,
-      },
-    })
+  return useQuery(
+    ["route-seats", params],
+    async () =>
+      axios.get(`/routes/${id}/seats`, {
+        baseURL: API_BASE_URL,
+        params: {
+          have_first_class: haveFirstClass,
+          have_second_class: haveSecondClass,
+          have_third_class: haveThirdClass,
+          have_fourth_class: haveFourthClass,
+          have_wifi: haveWifi,
+          have_air_conditioning: haveAirConditioning,
+        },
+      }),
+    {
+      enabled: Boolean(id),
+    }
   );
 };

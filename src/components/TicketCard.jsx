@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { SwapRightOutlined } from "@ant-design/icons";
 import { Button } from "components/common/Button";
 import { getTimeFromTimestamp, getMinNumber } from "utils/utils";
+import { PATH } from "utils/constants";
 
 const StyledTicketCard = styled.div`
   display: grid;
@@ -25,7 +26,7 @@ const StyledIcon = styled.div`
 
 const StyledName = styled.h3`
   margin-bottom: 16px;
-  
+
   color: #3e3c41;
   text-align: center;
   font-size: 24px;
@@ -117,8 +118,6 @@ const StyledSeatTypePrice = styled.div`
 `;
 
 const StyledServices = styled.div``;
-
-const path = ["Адлер", "Москва", "Санкт-Петербург"];
 
 const getMinPrice = (priceObj) =>
   priceObj ? getMinNumber(Object.values(priceObj)) : "";
@@ -241,7 +240,7 @@ const TicketCard = (props) => {
         <StyledName>{train.name}</StyledName>
 
         <div>
-          {path.map((item, index) => (
+          {PATH.map((item, index) => (
             <StyledPath key={index}>
               {index !== 0 && " >"} {item}
             </StyledPath>
@@ -274,7 +273,7 @@ const TicketCard = (props) => {
 
         <StyledSeatTypes>
           <StyledSeatTypeList>
-          {seatTypes.map((type) => type.content)}
+            {seatTypes.map((type) => type.content)}
           </StyledSeatTypeList>
 
           <StyledServices></StyledServices>

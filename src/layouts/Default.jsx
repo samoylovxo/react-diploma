@@ -268,7 +268,7 @@ const Default = (props) => {
                     label="Будьте в курсе событий"
                     placeholder="e-mail"
                     register={form.register("email", REQUIRED)}
-                    errors={form.formState.errors}
+                    errors={form?.formState?.errors}
                     onChange={(value) => {
                       if (value.trim() !== "") form.clearErrors("email");
 

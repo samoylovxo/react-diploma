@@ -17,10 +17,6 @@ const StyledDatepicker = styled(AntdDatepicker)`
   height: 60px;
   padding: 12px 20px;
 
-  &:hover {
-    border-color: transparent !important;
-  }
-
   input {
     font-size: 18px !important;
   }
@@ -41,7 +37,16 @@ const StyledError = styled.p`
 `;
 
 const Datepicker = (props) => {
-  const { label, name, value, placeholder, register, errors, onChange } = props;
+  const {
+    label,
+    name,
+    value,
+    placeholder,
+    register,
+    errors,
+    isClearable = true,
+    onChange,
+  } = props;
 
   return (
     <StyledDatepickerWrapper>
@@ -52,13 +57,13 @@ const Datepicker = (props) => {
         format="DD.MM.YYYY"
         placeholder={placeholder}
         locale={locale}
-        allowClear={false}
+        allowClear={isClearable}
         showToday={false}
         suffixIcon={
           <CalendarOutlined style={{ fontSize: "32px", color: "#E5E5E5" }} />
         }
-        onChange={(option) => {
-          if (onChange) onChange(new Date(option));
+        onChange={(date) => {
+          if (onChange) onChange((date && new Date(date)) || null);
         }}
         {...(value ? { value: dayjs(value) } : {})}
       />

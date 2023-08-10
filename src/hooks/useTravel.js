@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useDebounce, useDebouncedCallback } from "use-debounce";
 import { useForm } from "react-hook-form";
 import { useGetCities } from "hooks/query/useCities";
-import { useGetRoutes } from "hooks/query/useRoutes";
+import { useGetRoutes, useGetRouteSeats } from "hooks/query/useRoutes";
 import { createQueryString } from "utils/utils";
 import { SET_VALUE_OPTIONS } from "utils/constants";
 
@@ -15,8 +15,6 @@ const useTravel = () => {
     const { pathname } = location;
     const newQuery = createQueryString(query);
 
-    setRoutesParams(query);
-
     navigate({
       to: pathname,
       search: newQuery,
@@ -24,8 +22,9 @@ const useTravel = () => {
   }, 400);
 
   const [searchCity, setSearchCity] = useState("");
-  const [routesParams, setRoutesParams] = useState({});
   const [debouncedSearchCity] = useDebounce(searchCity, 400);
+  const [routesParams, setRoutesParams] = useState({});
+  const [activeRoute, setActiveRoute] = useState(null);
 
   const params = useMemo(() => {
     if (!location.search) return;
@@ -46,6 +45,10 @@ const useTravel = () => {
 
   const { data: cities } = useGetCities(debouncedSearchCity);
   const { data: routes } = useGetRoutes(routesParams);
+  const { data: seats } = useGetRouteSeats({
+    ...params,
+    id: activeRoute?.departure?._id,
+  });
 
   const citiesOptions = useMemo(() => {
     if (!cities) return [];
@@ -76,9 +79,12 @@ const useTravel = () => {
       cities: cities?.data || [],
       citiesOptions,
       routes: routes?.data,
+      seats: seats?.data || [],
+      activeRoute,
     },
     mutations: {
       setSearchCity,
+      setActiveRoute,
     },
     actions: {
       handleFormSetValue,

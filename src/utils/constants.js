@@ -9,4 +9,6 @@ const SET_VALUE_OPTIONS = {
   shouldValidate: true,
 };
 
-export { API_BASE_URL, REQUIRED, SET_VALUE_OPTIONS };
+const PATH = ["Москва", "Санкт-Петербург"];
+
+export { API_BASE_URL, REQUIRED, SET_VALUE_OPTIONS, PATH };

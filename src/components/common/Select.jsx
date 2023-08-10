@@ -16,10 +16,6 @@ const StyledSelect = styled(AntdSelect)`
     height: 60px !important;
     padding: 12px 20px !important;
     font-size: 18px !important;
-
-    &:hover {
-      border-color: transparent !important;
-    }
   }
 
   .select-selection-search-input {
@@ -56,6 +52,7 @@ const Select = (props) => {
     placeholder,
     register,
     errors,
+    showIcon = true,
     onSearch,
     onChange,
   } = props;
@@ -69,15 +66,21 @@ const Select = (props) => {
         options={options}
         placeholder={placeholder}
         value={value}
-        suffixIcon={
-          <EnvironmentFilled style={{ fontSize: "32px", color: "#E5E5E5" }} />
-        }
         showSearch={true}
         filterOption={false}
         onSearch={onSearch}
         onChange={(option) => {
           if (onChange) onChange(option);
         }}
+        {...(showIcon
+          ? {
+              suffixIcon: (
+                <EnvironmentFilled
+                  style={{ fontSize: "32px", color: "#E5E5E5" }}
+                />
+              ),
+            }
+          : {})}
       />
 
       <ErrorMessage

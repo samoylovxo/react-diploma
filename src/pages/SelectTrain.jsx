@@ -5,8 +5,11 @@ import { TravelForm } from "components/TravelForm";
 import { Container } from "components/Container";
 import { Steps } from "components/Steps";
 import { ContextTravel } from "hooks/useTravel";
-import { StepOne } from "components/steps/StepOne";
 import { Filters } from "components/Filters";
+import { FormProvider } from "react-hook-form";
+import { StepOne } from "components/steps/StepOne";
+import { StepTwo } from "components/steps/StepTwo";
+import { StepThree } from "components/steps/StepThree";
 
 const StyledTabContent = styled.span`
   display: grid;
@@ -50,6 +53,9 @@ const StyledHeroContainer = styled(Container)`
 `;
 
 const StyledContainer = styled(Container)`
+  padding-top: 20px;
+  padding-bottom: 20px;
+
   display: grid;
   grid-template-columns: 360px 1fr;
   gap: 80px;
@@ -59,7 +65,7 @@ const StyledFilters = styled.div``;
 
 const SelectTrain = () => {
   const {
-    state: { formValues },
+    state: { formInstance },
     actions: { handleBaseFormSubmit },
   } = useContext(ContextTravel);
 
@@ -87,14 +93,7 @@ const SelectTrain = () => {
           Билеты
         </StyledTabContent>
       ),
-      content: (
-        <StepOne
-          onNextStep={(route) => {
-            handleNextStep();
-            console.log("route", route);
-          }}
-        />
-      ),
+      content: <StepOne onNextStep={handleNextStep} />,
       isActive: activeStepIndex >= 0,
     },
     {
@@ -104,7 +103,7 @@ const SelectTrain = () => {
           Пассажиры
         </StyledTabContent>
       ),
-      content: <StyledSelectTrain>Пассажиры</StyledSelectTrain>,
+      content: <StepTwo onNextStep={handleNextStep} />,
       isActive: activeStepIndex >= 1,
     },
     {
@@ -114,7 +113,7 @@ const SelectTrain = () => {
           Оплата
         </StyledTabContent>
       ),
-      content: <StyledSelectTrain>Оплата</StyledSelectTrain>,
+      content: <StepThree onNextStep={handleNextStep} />,
       isActive: activeStepIndex >= 2,
     },
     {
@@ -133,23 +132,22 @@ const SelectTrain = () => {
 
   return (
     <Default>
-      <StyledSelectTrainHero>
-        <StyledHeroContainer>
-          <TravelForm direction="row" onSubmit={handleBaseFormSubmit} />
-        </StyledHeroContainer>
-      </StyledSelectTrainHero>
+      <FormProvider {...formInstance}>
+        <StyledSelectTrainHero>
+          <StyledHeroContainer>
+            <TravelForm direction="row" onSubmit={handleBaseFormSubmit} />
+          </StyledHeroContainer>
+        </StyledSelectTrainHero>
 
-      <Steps steps={steps} activeStepKey={activeStep.key} />
+        <Steps steps={steps} activeStepKey={activeStep.key} />
 
-      <button onClick={handleNextStep}>next</button>
-      <button onClick={handlePrevStep}>prev</button>
-
-      <StyledContainer>
-        <StyledFilters>
-          <Filters />
-        </StyledFilters>
-        {activeStep.content}
-      </StyledContainer>
+        <StyledContainer>
+          <StyledFilters>
+            <Filters />
+          </StyledFilters>
+          {activeStep.content}
+        </StyledContainer>
+      </FormProvider>
     </Default>
   );
 };
