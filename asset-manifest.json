@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/react-diploma/static/css/main.2395a210.css",
+    "main.js": "/react-diploma/static/js/main.dbebaff7.js",
+    "index.html": "/react-diploma/index.html",
+    "main.2395a210.css.map": "/react-diploma/static/css/main.2395a210.css.map",
+    "main.dbebaff7.js.map": "/react-diploma/static/js/main.dbebaff7.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2395a210.css",
+    "static/js/main.dbebaff7.js"
+  ]
+}
