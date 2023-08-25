@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components";
-import { ContextTravel } from "hooks/useTravel";
 import { Button } from "components/common/Button";
 import { PersonalCard } from "components/PersonalCard";
 
@@ -13,17 +12,11 @@ const StyledStepThree = styled.div`
 const StepThree = (props) => {
   const { onNextStep } = props;
 
-  const {
-    state: { formInstance },
-  } = useContext(ContextTravel);
-
   return (
     <StyledStepThree>
       <PersonalCard />
 
-      <Button onClick={onNextStep}>
-        КУПИТЬ БИЛЕТЫ
-      </Button>
+      <Button onClick={onNextStep}>КУПИТЬ БИЛЕТЫ</Button>
     </StyledStepThree>
   );
 };

@@ -24,8 +24,11 @@ const StepTwo = (props) => {
     control: formInstance.control,
   });
 
+  const showButton = fields.length > 1;
+
   const users = fields.map((seat, index) => {
     const { seat_number } = seat;
+
     return {
       key: index + 1,
       label: `Пассажир ${index + 1}`,
@@ -34,6 +37,7 @@ const StepTwo = (props) => {
           key={index}
           name={`departure.seats.${index}.personInfo`}
           userNumber={seat_number}
+          showButton={showButton}
           onChange={(value) =>
             update(index, {
               ...seat,

@@ -123,7 +123,7 @@ const getMinPrice = (priceObj) =>
   priceObj ? getMinNumber(Object.values(priceObj)) : "";
 
 const TicketCard = (props) => {
-  const { route, onClick } = props;
+  const { route, isEditable = false, onClick } = props;
 
   const {
     departure: {
@@ -273,13 +273,27 @@ const TicketCard = (props) => {
 
         <StyledSeatTypes>
           <StyledSeatTypeList>
-            {seatTypes.map((type) => type.content)}
+            {seatTypes.map((type, index) => (
+              <span key={index}>{type.content}</span>
+            ))}
           </StyledSeatTypeList>
 
           <StyledServices></StyledServices>
-          <Button size="s" isBlock={true} onClick={onClick}>
-            Выбрать места
-          </Button>
+          {isEditable ? (
+            <Button
+              size="s"
+              view="secondary"
+              color="black"
+              isBlock={true}
+              onClick={onClick}
+            >
+              Изменить
+            </Button>
+          ) : (
+            <Button size="s" isBlock={true} onClick={onClick}>
+              Выбрать места
+            </Button>
+          )}
         </StyledSeatTypes>
       </StyledContentRight>
     </StyledTicketCard>

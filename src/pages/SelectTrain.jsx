@@ -10,6 +10,9 @@ import { FormProvider } from "react-hook-form";
 import { StepOne } from "components/steps/StepOne";
 import { StepTwo } from "components/steps/StepTwo";
 import { StepThree } from "components/steps/StepThree";
+import { StepFour } from "components/steps/StepFour";
+import { useNavigate } from "react-router-dom";
+import { useOrderCreate } from "hooks/query/useOrder";
 
 const StyledTabContent = styled.span`
   display: grid;
@@ -28,11 +31,6 @@ const StyledTabKey = styled.span`
 
   border: 2px solid #ffffff;
   border-radius: 50%;
-`;
-
-const StyledSelectTrain = styled.div`
-  height: 400px;
-  color: #000;
 `;
 
 const StyledSelectTrainHero = styled.div`
@@ -64,25 +62,49 @@ const StyledContainer = styled(Container)`
 const StyledFilters = styled.div``;
 
 const SelectTrain = () => {
+  const navigate = useNavigate();
   const {
     state: { formInstance },
     actions: { handleBaseFormSubmit },
   } = useContext(ContextTravel);
 
-  // console.log("formValues", formValues);
-
   const [activeStepIndex, setActiveStepIndex] = useState(0);
 
+  const { mutate: createOrder } = useOrderCreate();
+
   const handleNextStep = () => {
-    setActiveStepIndex((index) =>
-      index < steps.length - 1 ? index + 1 : index
-    );
+    const lastIndex = steps.length - 1;
+
+    setActiveStepIndex((index) => (index < lastIndex ? index + 1 : index));
   };
 
   const handlePrevStep = () => {
     setActiveStepIndex((index) =>
       index < steps.length - 1 ? index - 1 : index
     );
+  };
+
+  const handleCheckoutSubmit = () => {
+    const { user, departure } = formInstance.getValues();
+
+    createOrder({
+      data: {
+        user,
+        departure: {
+          ...departure,
+          seats: departure.seats.map((seat) => ({
+            ...seat,
+            person_info: {
+              ...seat.personInfo,
+              document_data: `${seat.personInfo.documentDataSerial} ${seat.personInfo.documentDataNumber}`,
+            },
+          })),
+        },
+      },
+      onSuccess: () => {
+        navigate("/checkout-result");
+      },
+    });
   };
 
   const steps = [
@@ -123,7 +145,7 @@ const SelectTrain = () => {
           Проверка
         </StyledTabContent>
       ),
-      content: <StyledSelectTrain>Проверка</StyledSelectTrain>,
+      content: <StepFour onNextStep={handleCheckoutSubmit} />,
       isActive: activeStepIndex >= 3,
     },
   ];

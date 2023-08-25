@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
-import { Checkbox, Space, Radio } from "antd";
+import { Space, Radio } from "antd";
 import styled from "styled-components";
-import { Select } from "./common/Select";
-import { Input } from "./common/Input";
-import { Datepicker } from "./common/Datepicker";
+import { Select } from "components/common/Select";
+import { Input } from "components/common/Input";
+import { Datepicker } from "components/common/Datepicker";
+import { Checkbox } from "components/common/Checkbox";
 import { Button } from "./common/Button";
 import { ContextTravel } from "hooks/useTravel";
 import { REQUIRED } from "utils/constants";
@@ -63,7 +64,7 @@ const StyledBottom = styled.div`
 `;
 
 const UserInfo = (props) => {
-  const { name, userNumber = 1, onChange, onSubmit } = props;
+  const { name, userNumber = 1, showButton = true, onChange, onSubmit } = props;
 
   const {
     state: { formInstance },
@@ -77,43 +78,45 @@ const UserInfo = (props) => {
 
       <StyledForm>
         <Select
-          name={`${name}.isAdult`}
-          value={formInstance.watch(`${name}.isAdult`) || USER_YEARS_OPTIONS[0]}
+          name={`${name}.is_adult`}
+          value={
+            formInstance.watch(`${name}.is_adult`) || USER_YEARS_OPTIONS[0]
+          }
           errors={formInstance?.formState?.errors}
           options={USER_YEARS_OPTIONS}
           showIcon={false}
           onChange={(value) => {
-            if (onChange) onChange({ isAdult: value });
+            if (onChange) onChange({ is_adult: value });
           }}
         />
 
         <Space size={24}>
           <Input
-            name={`${name}.lastName`}
+            name={`${name}.last_name`}
             label="Фамилия"
             placeholder="Введите фамилию"
-            value={formInstance.watch(`${name}.lastName`)}
-            register={formInstance.register(`${name}.lastName`, REQUIRED)}
+            value={formInstance.watch(`${name}.last_name`)}
+            register={formInstance.register(`${name}.last_name`, REQUIRED)}
             errors={formInstance?.formState?.errors}
             onChange={(value) => {
               if (value.trim() !== "")
-                formInstance.clearErrors(`${name}.lastName`);
+                formInstance.clearErrors(`${name}.last_name`);
 
-              if (onChange) onChange({ lastName: value });
+              if (onChange) onChange({ last_name: value });
             }}
           />
           <Input
-            name={`${name}.firstName`}
+            name={`${name}.first_name`}
             label="Имя"
             placeholder="Введите имя"
-            value={formInstance.watch(`${name}.firstName`)}
-            register={formInstance.register(`${name}.firstName`, REQUIRED)}
+            value={formInstance.watch(`${name}.first_name`)}
+            register={formInstance.register(`${name}.first_name`, REQUIRED)}
             errors={formInstance?.formState?.errors}
             onChange={(value) => {
               if (value.trim() !== "")
-                formInstance.clearErrors(`${name}.firstName`);
+                formInstance.clearErrors(`${name}.first_name`);
 
-              if (onChange) onChange({ firstName: value });
+              if (onChange) onChange({ first_name: value });
             }}
           />
           <Input
@@ -156,19 +159,17 @@ const UserInfo = (props) => {
           />
         </Space>
 
-        <Checkbox>ограниченная подвижность</Checkbox>
-
         <StyledSpace size={24} align="end">
           <Select
-            name={`${name}.documentType`}
+            name={`${name}.document_type`}
             value={
-              formInstance.watch(`${name}.documentType`) || DOC_TYPE_OPTIONS[0]
+              formInstance.watch(`${name}.document_type`) || DOC_TYPE_OPTIONS[0]
             }
             errors={formInstance?.formState?.errors}
             options={DOC_TYPE_OPTIONS}
             showIcon={false}
             onChange={(value) => {
-              if (onChange) onChange({ documentType: value });
+              if (onChange) onChange({ document_type: value });
             }}
           />
 
@@ -207,16 +208,18 @@ const UserInfo = (props) => {
         </StyledSpace>
       </StyledForm>
 
-      <StyledBottom>
-        <Button
-          view="secondary"
-          color="black"
-          size="s"
-          onClick={formInstance.handleSubmit(onSubmit)}
-        >
-          Следующий пассажир
-        </Button>
-      </StyledBottom>
+      {showButton && (
+        <StyledBottom>
+          <Button
+            view="secondary"
+            color="black"
+            size="s"
+            onClick={formInstance.handleSubmit(onSubmit)}
+          >
+            Следующий пассажир
+          </Button>
+        </StyledBottom>
+      )}
     </StyledUserInfo>
   );
 };

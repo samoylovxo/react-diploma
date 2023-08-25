@@ -16,14 +16,14 @@ const StyledSteps = styled.div`
 const StyledStep = styled.button`
   position: relative;
 
-  padding: 20px;
+  padding: 20px 80px 20px;
 
   display: flex;
   justify-content: center;
 
   font-weight: 700;
-  font-size: 30px;
-  line-height: 35px;
+  font-size: 20px;
+  line-height: 22px;
   color: #fff;
 
   cursor: default;

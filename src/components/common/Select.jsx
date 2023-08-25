@@ -30,7 +30,7 @@ const StyledSelect = styled(AntdSelect)`
 `;
 
 const StyledLabel = styled.div`
-  color: #e5e5e5;
+  color: #c0c0c0;
   font-size: 24px;
 `;
 

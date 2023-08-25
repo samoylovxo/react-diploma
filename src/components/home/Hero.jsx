@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Container } from "components/Container";
 import { TravelForm } from "components/TravelForm";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { ContextTravel } from "hooks/useTravel";
 
@@ -28,22 +28,32 @@ const StyledContent = styled.div`
   right: 0;
 
   display: grid;
-  grid-template-columns: 1fr 1fr;
   align-items: center;
   column-gap: 100px;
+
+  ${({ view }) =>
+    view === "primary"
+      ? css`
+          grid-template-columns: 1fr 1fr;
+        `
+      : css`
+          min-height: 600px;
+        `}
 `;
 
 const StyledTitle = styled.h1`
   color: #ffffff;
   font-size: 72px;
-  font-weight: 100;
+  font-weight: 400;
 
   span {
     font-weight: 700;
   }
 `;
 
-const Hero = () => {
+const Hero = (props) => {
+  const { title, hideForm = false, view = "primary" } = props;
+
   const navigate = useNavigate();
 
   const {
@@ -53,17 +63,23 @@ const Hero = () => {
   return (
     <StyledHero>
       <StyledContainer>
-        <StyledContent>
+        <StyledContent view={view}>
           <StyledTitle>
-            Вся жизнь - <span>путешествие!</span>
+            {title || (
+              <>
+                Вся жизнь - <span>путешествие!</span>
+              </>
+            )}
           </StyledTitle>
 
-          <TravelForm
-            onSubmit={(data) => {
-              handleBaseFormSubmit(data);
-              navigate("/select-train");
-            }}
-          />
+          {!hideForm && (
+            <TravelForm
+              onSubmit={(data) => {
+                handleBaseFormSubmit(data);
+                navigate("/select-train");
+              }}
+            />
+          )}
         </StyledContent>
       </StyledContainer>
     </StyledHero>

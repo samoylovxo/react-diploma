@@ -39,9 +39,12 @@ const transformDateToDotted = (date) => {
   return `${timeZeroFormat(day)}.${timeZeroFormat(month)}.${year}`;
 };
 
+const getRandomNumber = (max) => Math.floor(Math.random() * max);
+
 export {
   getTimeFromTimestamp,
   getMinNumber,
   createQueryString,
   transformDateToDotted,
+  getRandomNumber
 };

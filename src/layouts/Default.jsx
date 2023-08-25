@@ -258,11 +258,7 @@ const Default = (props) => {
               <StyledSub>
                 <StyledTitle>Подписка</StyledTitle>
 
-                <StyledForm
-                  onSubmit={form.handleSubmit((data) => {
-                    console.log("data", data);
-                  })}
-                >
+                <StyledForm onSubmit={form.handleSubmit(() => {})}>
                   <Input
                     name="email"
                     label="Будьте в курсе событий"
@@ -289,7 +285,9 @@ const Default = (props) => {
                 <StyledTitle>Подписывайтесь на нас</StyledTitle>
 
                 <StyledSocialList>
-                  {SOCIALS.map((social) => social.icon)}
+                  {SOCIALS.map((social, index) => (
+                    <span key={index}>{social.icon}</span>
+                  ))}
                 </StyledSocialList>
               </StyledSocials>
             </StyledFooterRight>

@@ -1,165 +1,6 @@
-import { useQuery } from "react-query";
+import { useQuery, useMutation } from "react-query";
 import axios from "axios";
 import { API_BASE_URL } from "utils/constants";
-
-// {
-//   "total_count": 0,
-//   "items": [
-//     {
-//       "have_first_class": true,
-//       "have_second_class": true,
-//       "have_third_class": true,
-//       "have_fourth_class": true,
-//       "have_wifi": true,
-//       "have_air_conditioning": true,
-//       "is_express": true,
-//       "min_price": 0,
-//       "arrival": {
-//         "_id": "string",
-//         "have_first_class": true,
-//         "have_second_class": true,
-//         "have_third_class": true,
-//         "have_fourth_class": true,
-//         "have_wifi": true,
-//         "have_air_conditioning": true,
-//         "train": {
-//           "_id": "string",
-//           "name": "string"
-//         },
-//         "from": {
-//           "railway_station_name": "string",
-//           "city": {
-//             "_id": "string",
-//             "name": "string"
-//           },
-//           "datetime": 0
-//         },
-//         "to": {
-//           "railway_station_name": "string",
-//           "city": {
-//             "_id": "string",
-//             "name": "string"
-//           },
-//           "datetime": 0
-//         },
-//         "min_price": 0,
-//         "duration": 0,
-//         "price_info": {
-//           "first": {
-//             "price": 0,
-//             "top_price": 0,
-//             "bottom_price": 0,
-//             "side_price": 0,
-//             "linens_price": 0,
-//             "wifi_price": 0
-//           },
-//           "second": {
-//             "price": 0,
-//             "top_price": 0,
-//             "bottom_price": 0,
-//             "side_price": 0,
-//             "linens_price": 0,
-//             "wifi_price": 0
-//           },
-//           "third": {
-//             "price": 0,
-//             "top_price": 0,
-//             "bottom_price": 0,
-//             "side_price": 0,
-//             "linens_price": 0,
-//             "wifi_price": 0
-//           },
-//           "fourth": {
-//             "price": 0,
-//             "top_price": 0,
-//             "bottom_price": 0,
-//             "side_price": 0,
-//             "linens_price": 0,
-//             "wifi_price": 0
-//           }
-//         },
-//         "seats_info": {
-//           "first": 0,
-//           "second": 0,
-//           "third": 0,
-//           "fourth": 0
-//         }
-//       },
-//       "departure": {
-//         "_id": "string",
-//         "have_first_class": true,
-//         "have_second_class": true,
-//         "have_third_class": true,
-//         "have_fourth_class": true,
-//         "have_wifi": true,
-//         "have_air_conditioning": true,
-//         "train": {
-//           "_id": "string",
-//           "name": "string"
-//         },
-//         "from": {
-//           "railway_station_name": "string",
-//           "city": {
-//             "_id": "string",
-//             "name": "string"
-//           },
-//           "datetime": 0
-//         },
-//         "to": {
-//           "railway_station_name": "string",
-//           "city": {
-//             "_id": "string",
-//             "name": "string"
-//           },
-//           "datetime": 0
-//         },
-//         "min_price": 0,
-//         "duration": 0,
-//         "price_info": {
-//           "first": {
-//             "price": 0,
-//             "top_price": 0,
-//             "bottom_price": 0,
-//             "side_price": 0,
-//             "linens_price": 0,
-//             "wifi_price": 0
-//           },
-//           "second": {
-//             "price": 0,
-//             "top_price": 0,
-//             "bottom_price": 0,
-//             "side_price": 0,
-//             "linens_price": 0,
-//             "wifi_price": 0
-//           },
-//           "third": {
-//             "price": 0,
-//             "top_price": 0,
-//             "bottom_price": 0,
-//             "side_price": 0,
-//             "linens_price": 0,
-//             "wifi_price": 0
-//           },
-//           "fourth": {
-//             "price": 0,
-//             "top_price": 0,
-//             "bottom_price": 0,
-//             "side_price": 0,
-//             "linens_price": 0,
-//             "wifi_price": 0
-//           }
-//         },
-//         "seats_info": {
-//           "first": 0,
-//           "second": 0,
-//           "third": 0,
-//           "fourth": 0
-//         }
-//       },
-//       "total_avaliable_seats": 0
-//     }
-//   ]
-// }
 
 export const useGetRoutes = (params, { onSuccess } = {}) => {
   const {
@@ -265,5 +106,13 @@ export const useGetRouteSeats = (params) => {
     {
       enabled: Boolean(id),
     }
+  );
+};
+
+export const useOrderCreate = () => {
+  return useMutation(({ data }) =>
+    axios.post("/routes/order", data, {
+      baseURL: API_BASE_URL,
+    })
   );
 };

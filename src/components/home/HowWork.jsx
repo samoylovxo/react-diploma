@@ -6,6 +6,7 @@ import {
   GlobalOutlined,
 } from "@ant-design/icons";
 import { Container } from "components/Container";
+import { InfoBlock } from "components/InfoBlock";
 import styled from "styled-components";
 
 const BLOCKS = [
@@ -57,31 +58,6 @@ const StyledBlocks = styled.div`
   justify-items: center;
 `;
 
-const StyledBlock = styled.div`
-  display: grid;
-  gap: 32px;
-  justify-items: center;
-`;
-
-const StyledBlockIcon = styled.div`
-  padding: 20px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  outline: 10px solid rgba(255, 255, 255, 0.25);
-  border-radius: 50%;
-  background-color: #ffffff;
-`;
-
-const StyledBlockText = styled.p`
-  color: #e5e5e5;
-  text-align: center;
-  font-size: 24px;
-  font-weight: 400;
-`;
-
 const HowWork = (props) => {
   const { id } = props;
 
@@ -96,14 +72,7 @@ const HowWork = (props) => {
 
         <StyledBlocks>
           {BLOCKS.map((block, index) => {
-            const { icon, text } = block;
-
-            return (
-              <StyledBlock key={index}>
-                <StyledBlockIcon>{icon}</StyledBlockIcon>
-                <StyledBlockText>{text}</StyledBlockText>
-              </StyledBlock>
-            );
+            return <InfoBlock key={index} {...block} />;
           })}
         </StyledBlocks>
       </Container>

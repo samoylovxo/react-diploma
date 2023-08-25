@@ -51,8 +51,6 @@ const TravelForm = (props) => {
 
   const isDirectionColumn = direction === "column";
 
-  console.log(formInstance.watch("startDate"));
-
   return (
     <StyledTravelForm
       isDirectionColumn={isDirectionColumn}

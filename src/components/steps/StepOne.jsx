@@ -36,10 +36,12 @@ const StepOne = (props) => {
   const {
     state: { routes, activeRoute, seats },
     mutations: { setActiveRoute },
+    actions: { handleFormSetValue },
   } = useContext(ContextTravel);
 
   const routeItems = routes?.items || [];
   const showSeats = Boolean(activeRoute);
+  const hasSeats = seats.length > 0;
 
   return (
     <StyledStepOne>
@@ -57,6 +59,12 @@ const StepOne = (props) => {
               />
             );
           })}
+
+          {!hasSeats && (
+            <div>
+              Мест с заданными фильтрами не найдено. Попробуйте изменить фильтры
+            </div>
+          )}
 
           <Button
             onClick={() => {
@@ -78,6 +86,10 @@ const StepOne = (props) => {
                   route={route}
                   onClick={() => {
                     setActiveRoute(route);
+                    handleFormSetValue(
+                      "departure.route_direction_id",
+                      route.departure._id
+                    );
                   }}
                 />
               );
