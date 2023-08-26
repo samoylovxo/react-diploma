@@ -2,19 +2,20 @@ import { Container } from "components/Container";
 import { User } from "components/User";
 import React from "react";
 import styled from "styled-components";
+import { PUBLIC_URL } from "utils/constants";
 
 const REVIEWS = [
   {
     name: "Екатерина Вальнова",
     comment:
       "“Доброжелательные подсказки на всех этапах помогут правильно заполнить поля и без затруднений купить авиа или ж/д билет, даже если вы заказываете онлайн билет впервые.“",
-    photo: "/images/review-user-1.png",
+    photo: `${PUBLIC_URL}/images/review-user-1.png`,
   },
   {
     name: "Евгений Стрыкало",
     comment:
       "“СМС-сопровождение до посадки Сразу после оплаты ж/д билетов и за 3 часа до отправления мы пришлем вам СМС-напоминание о поездке.“",
-    photo: "/images/review-user-2.png",
+    photo: `${PUBLIC_URL}/images/review-user-2.png`,
   },
 ];
 

@@ -8,6 +8,7 @@ import {
 import { Container } from "components/Container";
 import { InfoBlock } from "components/InfoBlock";
 import styled from "styled-components";
+import { PUBLIC_URL } from "utils/constants";
 
 const BLOCKS = [
   {
@@ -27,7 +28,7 @@ const BLOCKS = [
 const StyledHowWork = styled.section`
   padding: 60px 0 80px 0;
 
-  background-image: url(/images/how-work-bg.png);
+  background-image: ${() => `url(${PUBLIC_URL}/images/how-work-bg.png)`};
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;

@@ -109,10 +109,8 @@ const CheckoutResult = () => {
     state: { formInstance },
   } = useContext(ContextTravel);
 
-  const {
-    user: { first_name, patronymic },
-  } = formInstance.getValues();
-  const userName = `${first_name} ${patronymic}`;
+  const user = formInstance.getValues("user");
+  const userName = `${user?.first_name} ${user?.patronymic}`;
 
   const handleMenuItemClick = () => {
     navigate("/");

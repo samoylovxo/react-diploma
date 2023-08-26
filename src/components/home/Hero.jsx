@@ -4,11 +4,12 @@ import { TravelForm } from "components/TravelForm";
 import styled, { css } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { ContextTravel } from "hooks/useTravel";
+import { PUBLIC_URL } from "utils/constants";
 
 const StyledHero = styled.section`
   height: 800px;
 
-  background-image: url(/images/hero-bg.png);
+  background-image: ${() => `url(${PUBLIC_URL}/images/hero-bg.png)`};
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;

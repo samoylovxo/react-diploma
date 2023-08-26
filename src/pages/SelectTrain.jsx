@@ -13,6 +13,7 @@ import { StepThree } from "components/steps/StepThree";
 import { StepFour } from "components/steps/StepFour";
 import { useNavigate } from "react-router-dom";
 import { useOrderCreate } from "hooks/query/useOrder";
+import { PUBLIC_URL } from "utils/constants";
 
 const StyledTabContent = styled.span`
   display: grid;
@@ -36,7 +37,8 @@ const StyledTabKey = styled.span`
 const StyledSelectTrainHero = styled.div`
   height: 400px;
 
-  background-image: url(/images/select-train-hero-bg.png);
+  background-image: ${() =>
+    `url(${PUBLIC_URL}/images/select-train-hero-bg.png)`};
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;

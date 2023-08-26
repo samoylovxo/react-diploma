@@ -5,13 +5,14 @@ import { Home } from "pages/Home";
 import { SelectTrain } from "pages/SelectTrain";
 import { CheckoutResult } from "pages/CheckoutResult";
 import { AppProvider } from "providers/AppProvider";
+import { PUBLIC_URL } from "utils/constants";
 
 const queryClient = new QueryClient();
 
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <BrowserRouter basename={PUBLIC_URL}>
         <AppProvider>
           <Routes>
             <Route path="/" element={<Home />} />
